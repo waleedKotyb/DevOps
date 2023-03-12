@@ -1,0 +1,26 @@
+- name: install apache server
+  hosts: web
+  become: true
+  vars:
+    repo: https://github.com/waleedKotyb/jenkins-examples
+  tasks:
+  - name: apache Instlltion
+    apt:
+      name: '{{ item.name }}'
+      state: latest
+    loop:
+        - name: apache2
+        - name: mysql-server
+        - name: ufw
+        - name: vim
+  - name: start apache service
+    service:
+      name: apache2
+      state: started
+    when: ansible_os_family == "Debian"
+  - name: clone repo
+    git:
+      repo: '{{ repo }}'
+      dest: /var/www/html/test
+      clone: yes
+      update: yes
