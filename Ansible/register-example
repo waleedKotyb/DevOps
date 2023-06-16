@@ -1,0 +1,34 @@
+---
+- name: install packages
+  hosts: all
+  become: true
+  vars:
+    packages:
+    - name: apache2
+      req: True
+    - name: vim
+      req: True
+    - name: mysql
+      req: False
+
+  tasks:
+  name: install package
+  apt:
+    name: {{ item.name }}
+    loop: packages
+    when: item.req == True
+
+
+
+
+
+
+  - name: apache service
+    command: systemctl status apache2
+    register: res_cls
+
+  - name: activate apache
+    command: systemctl start apache2
+    when: res_cls.stdout.find('inactive') != -1
+
+        

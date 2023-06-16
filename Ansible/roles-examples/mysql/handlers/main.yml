@@ -1,0 +1,9 @@
+---
+     - name: restart mysql
+       service:
+        name: mysql
+        state: restarted
+     - name: restart ssh
+       service:
+        name: sshd
+        state: restarted

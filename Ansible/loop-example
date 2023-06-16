@@ -1,0 +1,24 @@
+---
+-
+    name: play1
+    hosts: web
+    become: true
+    tasks:
+
+    -   name: create folder
+        file:
+            path: "{{ folderpath }}"
+            state: directory
+    -   name: testcmd
+        shell: 'echo "{{ item }}" >> /home/ubuntu/testloop.txt'
+        with_env:
+            - a
+            - b
+            - c
+            - d 
+
+
+    vars_files:
+     - variables.yaml
+
+
